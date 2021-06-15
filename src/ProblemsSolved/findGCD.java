@@ -1,15 +1,18 @@
-package SolutionFiles;
+package ProblemsSolved;
+
+import SolutionFiles.SolutionSample;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class SolutionSample {
-
-
+/**
+ * Find highest common divisor between all the n elements in array.
+ */
+public class findGCD {
     public static void main(String[] args) {
         int[] arr1 = {2, 4, 6, 8, 10};
-        int result = SolutionSample.getGCD(arr1, 5);
+        int result = findGCD.getGCD(arr1, 5);
         System.out.println("the result is: " + result);
     }
 
