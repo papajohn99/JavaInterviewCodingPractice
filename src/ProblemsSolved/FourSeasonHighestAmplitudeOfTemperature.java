@@ -22,8 +22,42 @@ public class FourSeasonHighestAmplitudeOfTemperature {
         methodOne(arg2, arg1);
 
         System.out.println("+++++++++++ method 2 +++++++++++++");
-        methodTwo(arg2, arg1);
+        methodTwo(arg1);
     }
+
+    public static String methodTwo(int[] args) {
+        String[] totalSeasons = {"WINTER", "SPRING", "SUMMER", "AUTUMN"};
+        int monthsInSeason = args.length / totalSeasons.length;
+
+        int i = 0;
+        List<int[]> arr = new ArrayList<>();
+//        arr.subList(0, 3);
+        Map<String, int[]> map = new HashMap<>();
+        for (int x = 0; x < totalSeasons.length; x++) {
+            int counter = 0;
+            int[] sA = new int[monthsInSeason];
+            while (counter < monthsInSeason) {
+                sA[counter] = args[i];
+                i++;
+                counter++;
+            }
+            arr.add(sA);
+            map.put(totalSeasons[x], sA);
+        }
+
+        Map<Integer, String> map2 = new TreeMap<>();
+        map.forEach((key, value) ->
+                map2.put(Arrays.stream(value).reduce((acc, n) -> acc > n ? acc : n).getAsInt()
+                        - Arrays.stream(value).reduce((acc, n) -> acc < n ? acc : n).getAsInt(), key)
+        );
+
+        System.out.println(map2.keySet().stream().reduce((l, k) -> l > k ? l : k).get());
+
+        map2.entrySet().stream().filter(entry ->
+                entry.getKey() == Collections.max(map2.keySet()));
+        return null;
+    }
+
 
     private static void methodOne(int[] arg2, int[] arg1) throws ParseException {
         FourSeasonHighestAmplitudeOfTemperature solution = new FourSeasonHighestAmplitudeOfTemperature();
@@ -178,45 +212,3 @@ class TemperatureHistory {
         }
     }
 }
-
-/* My code -
-*  public static void main(String[] args) {
-
-        int[] arg2 = {-3, -14, -5, 7, 8, 42, 8, 3};
-        int[] arg1 = {2, -3, 3, 1, 10, 8, 2, 5, 13, -5, 3, -18};
-        SolutionSample s = new SolutionSample();
-        System.out.println(s.someMethod(arg2));
-    }
-
-    public String someMethod(int[] args) {
-        String[] totalSeasons = {"WINTER", "SPRING", "SUMMER", "AUTUMN"};
-        int monthsInSeason = args.length / totalSeasons.length;
-
-        int i = 0;
-        List<int[]> arr = new ArrayList<>();
-        arr.subList(0,3);
-        Map<String, int[]> map = new HashMap<>();
-        for (int x = 0; x < totalSeasons.length; x++) {
-            int counter = 0;
-            int[] sA = new int[monthsInSeason];
-            while (counter < monthsInSeason) {
-                sA[counter] = args[i];
-                i++;
-                counter++;
-            }
-            arr.add(sA);
-            map.put(totalSeasons[x], sA);
-        }
-
-        Map<Integer, String> map2 = new TreeMap<>();
-        map.forEach((key, value) ->
-                map2.put(Arrays.stream(value).reduce((acc, n) -> acc > n ? acc : n).getAsInt()
-                        - Arrays.stream(value).reduce((acc, n) -> acc < n ? acc : n).getAsInt(), key)
-        );
-
-        System.out.println(map2.keySet().stream().reduce((l, k) -> l > k ? l : k).get());
-
-        map2.entrySet().stream().filter(entry ->
-                entry.getKey() == Collections.max(map2.keySet()));
-        return null;
-    }*/
