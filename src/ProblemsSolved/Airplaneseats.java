@@ -1,14 +1,15 @@
-package SolutionFiles;
+package ProblemsSolved;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
-public class SolutionSample {
-
+public class Airplaneseats {
 
     public static void main(String[] args) {
         int[] arr1 = {2, 4, 6, 8, 10};
-        int result = SolutionSample.getGCD(2, "1A 2F 1C");
+        int result = Airplaneseats.getGCD(2, "1A 2F 1C");
         System.out.println("the result is: " + result);
     }
 

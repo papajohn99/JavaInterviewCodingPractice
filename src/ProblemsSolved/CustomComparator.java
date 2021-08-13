@@ -1,20 +1,24 @@
 package ProblemsSolved;
 
-import java.util.Comparator;
-import java.util.PriorityQueue;
-import java.util.Queue;
-import java.util.TreeSet;
+import java.util.*;
 
 public class CustomComparator {
     public static void main(String[] args) {
 
         CustomComparator st = new CustomComparator();
 
+        // collection sort
         TreeSet ss = new TreeSet(new MyComp());
         ss.add(new Book(5, "someName1"));
         ss.add(new Book(15, "someName2"));
         ss.add(new Book(10, "someName3"));
 
+        // Array sort
+        Book[] books = new Book[]{new Book(5, "someName1"),
+                new Book(15, "someName1"),
+                new Book(10, "someName1")};
+
+        Arrays.sort(books, new MyComp());
 
         for (Object b : ss) {
             Book x = (Book) b;

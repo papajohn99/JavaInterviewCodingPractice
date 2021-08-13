@@ -1,7 +1,5 @@
 package ProblemsSolved;
 
-import SolutionFiles.SolutionSample;
-
 import java.util.HashMap;
 import java.util.Map;
 
