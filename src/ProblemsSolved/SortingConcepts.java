@@ -18,40 +18,40 @@ public class SortingConcepts {
 
     }
 
-    public void quickSort(int[] arr, int low, int high) {
-        int left = low, right = high, pivot = low;
-
-        while (arr[pivot] <= arr[right] && pivot != right) {
-            right--;
-
-            if (pivot == right)
-                return;
-
-            if (arr[pivot] > arr[right]) {
-                swap(arr, pivot, right);
-                pivot = right;
-            }
-
-        }
-
-
-        while (arr[left] <= arr[pivot] && pivot != left) {
-            left++;
-
-            if (pivot == left)
-                return;
-
-            if (arr[left] >= arr[pivot]) {
-                swap(arr, pivot, left);
-                pivot = left;
-            }
+    private static void quickSort(Nations[] data, int lb, int rb) {
+        if (lb < rb) {
+            int loc = partiton(data, lb, rb);
+            quickSort(data, lb, loc - 1);
+            quickSort(data, loc + 1, rb);
         }
     }
 
-    public void swap(int[] arr, int p, int i) {
-        int temp = arr[i];
-        arr[i] = arr[p];
-        arr[p] = temp;
+    private static int partiton(Nations[] data, int lb, int rb) {
+
+        int pivot = lb;
+        int left = lb;
+        int right = rb;
+
+        while (left < right) {
+            while (left <= right && data[left].getiDYear() <= data[pivot].getiDYear()) {
+                left++;
+            }
+            while (right >= left && data[right].getiDYear() > data[pivot].getiDYear()) {
+                right--;
+            }
+            if (left < right) {
+                SortingConcepts.swap(data, left, right);
+            }
+        }
+        SortingConcepts.swap(data, pivot, right);
+        return right;
+    }
+
+    public static void swap(Nations[] data, int n1, int n2) {
+        Nations tempObj = data[n1];
+        data[n1] = data[n2];
+        data[n2] = tempObj;
+
     }
 
 
