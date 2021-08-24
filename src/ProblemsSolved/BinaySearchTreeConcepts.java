@@ -1,5 +1,10 @@
 package ProblemsSolved;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public class BinaySearchTreeConcepts {
 
     public static void main(String[] args) {
@@ -15,8 +20,94 @@ public class BinaySearchTreeConcepts {
 
         st.InsertBinaryTree(rootNode, 50);
 
+        List<Integer> li = new ArrayList<>();
+        li.add(8);
+        li.add(3);
+        li.add(1);
+        li.add(6);
+        li.add(4);
+        li.add(7);
+        li.add(10);
+        li.add(14);
+        li.add(13);
+
+        int[] n = li.stream().mapToInt(l -> l).toArray();
+        Node createdBiTree = st.createBinaryTree(n);
+        System.out.println("unsorted Array: " + Arrays.toString(n));
+        System.out.println("preOrder Traverse: " + preOrderTraverse(createdBiTree));
+        System.out.println("inOrder Traverse: " + inOrderTraverse(createdBiTree));
+        System.out.println("postOrder Traverse: " + postOrderTraverse(createdBiTree));
     }
 
+
+    // Create BST Left and Right. Sorted/unsorted Array.
+    public Node createBinaryTree(int[] arr) {
+        Node finalNode = null;
+
+        for (int a : arr) {
+            if (finalNode != null) {
+                InsertBinaryTree(finalNode, a);
+            } else {
+                finalNode = new Node(a, null, null);
+            }
+        }
+
+        return finalNode;
+    }
+
+    // Insert element in BST.
+    public void InsertBinaryTree(Node node, int nextNum) {
+
+        if (node != null) {
+            if (nextNum > node.info) {
+                InsertBinaryTree(node.right, nextNum);
+                if (node.right == null) {
+                    node.right = new Node(nextNum, null, null);
+                }
+            } else {
+                InsertBinaryTree(node.left, nextNum);
+                if (node.left == null) {
+                    node.left = new Node(nextNum, null, null);
+                }
+            }
+        }
+    }
+
+    //Left - Node - right
+    public static String preOrderTraverse(Node node) {
+        String result = "";
+        if (node != null) {
+            result += preOrderTraverse(node.left);
+            result += " " + node.info;
+            result += preOrderTraverse(node.right);
+
+        }
+        return result;
+    }
+
+    //root Node - left - right
+    public static String inOrderTraverse(Node node) {
+        String result = "";
+        if (node != null) {
+            result += " " + node.info;
+            result += preOrderTraverse(node.left);
+            result += preOrderTraverse(node.right);
+        }
+        return result;
+    }
+
+    //left - right - root Node
+    public static String postOrderTraverse(Node node) {
+        String result = "";
+        if (node != null) {
+            result += preOrderTraverse(node.left);
+            result += preOrderTraverse(node.right);
+            result += " " + node.info;
+        }
+        return result;
+    }
+
+    // Traverse Binary tree by level
     public void levelTraverse(Node node) {
 
         if (node != null) {
@@ -52,45 +143,10 @@ public class BinaySearchTreeConcepts {
         return null;
     }
 
-    // Insert element in BST.
-    public void InsertBinaryTree(Node node, int nextNum) {
 
-        if (node != null) {
-            if (nextNum > node.info) {
-                InsertBinaryTree(node.right, nextNum);
-                if (node.right == null) {
-                    node.right = new Node(nextNum, null, null);
-                }
-            } else {
-                InsertBinaryTree(node.left, nextNum);
-                if (node.left == null) {
-                    node.left = new Node(nextNum, null, null);
-                }
-            }
-        }
-    }
 
-    // Create BST Left and Right
-    public Node createBinaryTree(int[] arr) {
-        Node finalNode = new Node();
 
-        if (arr.length > 0) {
-
-            for (int i = 0; i < arr.length; i++) {
-
-                if (i == 0) {
-                    finalNode = new Node(arr[i], null, null);
-                } else {
-                    binaryTree(finalNode, arr[i]);
-                }
-
-            }
-        }
-
-        return finalNode;
-    }
-
-    private void binaryTree(Node node, int nextNum) {
+    /*private void binaryTree(Node node, int nextNum) {
 
         if (node != null) {
             if (nextNum > node.info) {
@@ -102,7 +158,7 @@ public class BinaySearchTreeConcepts {
                 node.left = new Node(nextNum, null, null);
             }
         }
-    }
+    }*/
 
 }
 
@@ -110,10 +166,6 @@ class Node {
     int info;
     Node left;
     Node right;
-
-    public Node() {
-
-    }
 
     Node(int info, Node left, Node right) {
         this.info = info;
