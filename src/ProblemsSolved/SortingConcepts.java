@@ -94,7 +94,9 @@ public class SortingConcepts {
             }
         }
 
-        array = b;
+        for (k = left; k <= right; k++) {
+            array[k] = b[k];
+        }
     }
 
     // bubble sort

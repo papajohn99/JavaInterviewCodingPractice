@@ -8,79 +8,115 @@ public class MultiDimentional {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
+        int[] x = new int[]{1, 2, 3};
+        int[][] y = new int[][]{{1, 4}, {2, 3}, {5, 6}};
 
 
-        MultiDimentional solution = new MultiDimentional();
+        int rows = y.length;
+        int columns = y[0].length;
 
+        Stack<Integer> s = new Stack<>();
+        List<List<Integer>> result = new ArrayList<>();
 
-        int m, n, o, c = 0, d = 0, f = 0;
-        int[][] res = new int[][]{};
+        for (int i = 0; i < rows * columns; i++) {
+            int row = i / columns;
+            int column = i % columns;
 
-        Scanner in = new Scanner(System.in);
+            System.out.print(y[row][column] + " ");
 
-        System.out.println("Enter the number of rows and columns of matrix");
-        m = in.nextInt();
-        n = in.nextInt();
+            s.add(y[row][column]);
 
-        if (m == 2 && n == 2) {
+            if (column == columns - 1) {
+                System.out.print("\n");
+                List<Integer> li = new ArrayList<>();
+                while (s.size() > 0) {
+                    System.out.print(s.peek() + " ");
+                    li.add(s.peek());
+                    s.pop();
+                }
+                result.add(li);
 
-            int[][] twoDimentional = new int[m][n];
-
-            System.out.println("Enter the 2*2 elements of first matrix");
-
-            for (c = 0; c < m; c++)
-                for (d = 0; d < n; d++)
-                    twoDimentional[c][d] = in.nextInt();
-
-            res = solution.solutionTwoByTwo(twoDimentional);
-        }
-
-        if (m == 3 && n == 3) {
-
-            int[][] threeDimentional = new int[m][n];
-            System.out.println("Enter the 3*3 elements of first matrix");
-
-            for (c = 0; c < m; c++)
-                for (d = 0; d < n; d++)
-                    threeDimentional[c][d] = in.nextInt();
-
-
-            res = solution.solutionThreeByThree(threeDimentional);
-        }
-         /*
-        System.out.println("Enter the elements of second matrix");
-
-       for (c = 0 ; c < m ; c++)
-            for (d = 0 ; d < n ; d++)
-                second[c][d] = in.nextInt();
-
-        for (c = 0; c < m; c++)
-            for (d = 0; d < n; d++)
-                sum[c][d] = first[c][d] + second[c][d];  //replace '+' with '-' to subtract matrices
-
-        System.out.println("Sum of the matrices:");
-
-        for (c = 0; c < m; c++)
-        {
-            for (d = 0; d < n; d++)
-                System.out.print(sum[c][d]+"\t");
-
-            System.out.println();
-        }
-*/
-        List result = Arrays.stream(res).collect(Collectors.toList());;
-
-        for (int[] x : res) {
-            result.add(x);
-            System.out.println(res[c][d] + "\t");
+            }
 
         }
 
         System.out.println(result);
-
-        scanner.close();
-
     }
+
+//    public static void main(String[] args) {
+//
+//
+//        MultiDimentional solution = new MultiDimentional();
+//
+//
+//        int m, n, o, c = 0, d = 0, f = 0;
+//        int[][] res = new int[][]{};
+//
+//        Scanner in = new Scanner(System.in);
+//
+//        System.out.println("Enter the number of rows and columns of matrix");
+//        m = in.nextInt();
+//        n = in.nextInt();
+//
+//        if (m == 2 && n == 2) {
+//
+//            int[][] twoDimentional = new int[m][n];
+//
+//            System.out.println("Enter the 2*2 elements of first matrix");
+//
+//            for (c = 0; c < m; c++)
+//                for (d = 0; d < n; d++)
+//                    twoDimentional[c][d] = in.nextInt();
+//
+//            res = solution.solutionTwoByTwo(twoDimentional);
+//        }
+//
+//        if (m == 3 && n == 3) {
+//
+//            int[][] threeDimentional = new int[m][n];
+//            System.out.println("Enter the 3*3 elements of first matrix");
+//
+//            for (c = 0; c < m; c++)
+//                for (d = 0; d < n; d++)
+//                    threeDimentional[c][d] = in.nextInt();
+//
+//
+//            res = solution.solutionThreeByThree(threeDimentional);
+//        }
+//         /*
+//        System.out.println("Enter the elements of second matrix");
+//
+//       for (c = 0 ; c < m ; c++)
+//            for (d = 0 ; d < n ; d++)
+//                second[c][d] = in.nextInt();
+//
+//        for (c = 0; c < m; c++)
+//            for (d = 0; d < n; d++)
+//                sum[c][d] = first[c][d] + second[c][d];  //replace '+' with '-' to subtract matrices
+//
+//        System.out.println("Sum of the matrices:");
+//
+//        for (c = 0; c < m; c++)
+//        {
+//            for (d = 0; d < n; d++)
+//                System.out.print(sum[c][d]+"\t");
+//
+//            System.out.println();
+//        }
+//*/
+//        List result = Arrays.stream(res).collect(Collectors.toList());;
+//
+//        for (int[] x : res) {
+//            result.add(x);
+//            System.out.println(res[c][d] + "\t");
+//
+//        }
+//
+//        System.out.println(result);
+//
+//        scanner.close();
+//
+//    }
 
     private int[][] solutionThreeByThree(int[][] values) {
 

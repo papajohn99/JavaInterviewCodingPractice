@@ -1,162 +1,141 @@
 package SolutionFiles;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Solution {
 
     public static void main(String[] args) {
-        /* Enter your code here*/
-        List<Integer> li = new ArrayList<>();
-        li.add(8);
-        li.add(3);
-        li.add(1);
-        li.add(6);
-        li.add(4);
-        li.add(7);
-        li.add(10);
-        li.add(14);
-        li.add(13);
-        System.out.println(createTree(li));
+        int[] x = new int[]{4, 7, 1, 8, 2, 5, 3};
+        String[] countries = {"Wood apple", "Blackberry", "Date", "Naseberry", "Tamarind", "Fig", "Mulberry", "Apple", "Plum", "Orange", "Custard apple", "Apricot"};
+
+        bb(x);
     }
 
-    public static String createTree(List<Integer> values) {
-        Tree tree = new Tree();
-        values.forEach(value -> tree.add(value));
-        return tree.traverseInOrderFromRoot();
+    public static void bb(int[] arr) {
+        //sort the array;
+//        quickSort(arr, 0, arr.length - 1);
+        mergeSort(arr, 0, arr.length - 1);
+
+        System.out.println(binarySearch(arr, 0, arr.length - 1, 5));
     }
 
-    public static class Tree {
-        Node root;
-
-        public String traverseInOrderFromRoot() {
-            return traverseInOrder(root);
+    private static void mergeSort(int[] arr, int lb, int rb) {
+        if (lb < rb) {
+            int mid = (lb + rb) / 2;
+            mergeSort(arr, lb, mid);
+            mergeSort(arr, mid + 1, rb);
+            combine(arr, lb, mid, rb);
         }
+    }
 
-        public String traverseInOrder(Node node) {
-            String traverseInOrder = "";
-            if (node != null) {
-                traverseInOrder += traverseInOrder(node.left);
-                traverseInOrder += visit(node.value);
-                traverseInOrder += traverseInOrder(node.right);
-            }
-            return traverseInOrder;
-        }
+    private static void combine(int[] arr, int lb, int mid, int rb) {
+        int[] sorted = new int[arr.length];
+        int i = lb; // lb to mid
+        int j = mid + 1; // mid+1 to rb
+        int k = lb;
 
-        private String visit(int value) {
-            return " " + value;
-        }
-
-
-        public void add(int value) {
-            if (root != null) {
-                addNode(root, value);
+        while (i <= mid && j <= rb) {
+            if (arr[i] <= arr[j]) {
+                sorted[k] = arr[i];
+                i++;
             } else {
-                root = new Node(value, null, null);
+                sorted[k] = arr[j];
+                j++;
+            }
+            k++;
+        }
+
+        if (i > mid) {
+            while (j <= rb) {
+                sorted[k] = arr[j];
+                j++;
+                k++;
+            }
+        } else {
+            while (i <= mid) {
+                sorted[k] = arr[i];
+                i++;
+                k++;
             }
         }
 
-        public void addNode(Node root, int value) {
-            if (root != null) {
 
-                if (value < root.getValue()) {
-                    addNode(root.left, value);
-                    if (root.left == null) {
-                        root.setLeft(new Node(value, null, null));
-                    }
-
-                }
-
-                if (value > root.getValue()) {
-                    addNode(root.right, value);
-                    if (root.right == null) {
-                        root.setRight(new Node(value, null, null));
-                    }
-                }
-            }
+        for (k = lb; k <= rb; k++) {
+            arr[k] = sorted[k];
         }
 
     }
 
-    public static class Node {
-        private int value;
-        private Node left, right;
-
-        Node(int value, Node left, Node right) {
-            this.value = value;
-            this.left = left;
-            this.right = right;
-        }
-
-        public int getValue() {
-            return value;
-        }
-
-        public void setValue(int value) {
-            this.value = value;
-        }
-
-        public Node getLeft() {
-            return left;
-        }
-
-        public void setLeft(Node left) {
-            this.left = left;
-        }
-
-        public Node getRight() {
-            return right;
-        }
-
-        public void setRight(Node right) {
-            this.right = right;
+    private static void quickSort(int[] arr, int lb, int rb) {
+        if (lb < rb) {
+            int placed = partition(arr, lb, rb);
+            quickSort(arr, lb, placed - 1);
+            quickSort(arr, placed + 1, rb);
         }
     }
+
+    private static int partition(int[] arr, int lb, int rb) {
+
+        int pivot = lb;
+        int left = lb;
+        int right = rb;
+
+        while (left <= right) {
+
+            while (left <= right && arr[left] <= arr[pivot]) {
+                left++;
+            }
+            while (right >= left && arr[right] > arr[pivot]) {
+                right--;
+            }
+
+            if (left < right) {
+                swap(arr, left, right);
+            }
+        }
+        swap(arr, pivot, right);
+        return right;
+    }
+
+    private static void swap(int[] arr, int l, int r) {
+        int temp = arr[l];
+        arr[l] = arr[r];
+        arr[r] = temp;
+    }
+
+    private static int binarySearch(int[] arr, int left, int right, int num) {
+
+        while (left <= right) {
+            int mid = (left + right) / 2;
+
+            if (arr[mid] == num) {
+                return mid;
+            }
+
+            if (num < arr[mid]) {
+                right = mid - 1;
+            } else {
+                left = mid + 1;
+            }
+        }
+        return -1;
+    }
+
 
 }
-   /* public static void main(String[] args) {
-        int[] x = new int[]{1, 2, 3};
-        int[][] y = new int[][]{{}, {2, 3}};
 
-        *//*System.out.println(calculateClicksByDomain(x));
-        Map<Key, String> t = new HashMap<>();
-        t.put(new Key("abc"),"ABC");
-        System.out.println(t.get(new Key("abc")));*//*
-        List<Long> l = new ArrayList<>();
-        l.add(1L);
-        l.add(2L);
+class Node {
+    int info;
+    Node left;
+    Node right;
 
-        computeFactorialSum(l);
-
-    }
-*/
-  /*  public static long computeFactorialSum(List<Long> inputs) {
-        long result = inputs.parallelStream().mapToLong(n -> computeFactorial((long) n)).sum();
-        for (int i = 0; i < inputs.size(); i++) {
-            result += computeFactorial((long) i);
-        }
-        return result;
-
+    Node() {
     }
 
-    public static Long computeFactorial(Long num) {
-        Long factorial = 1l;
-        for (int i = 1; i <= Math.abs(num); i++) {
-            factorial *= i;
-        }
-
-        return factorial;
-    }*/
-
-   /*
-
-    public static List<String> calculateClicksByDomain(int[] counts) {
-
-        return null;
+    Node(int info, Node left, Node right) {
+        this.info = info;
+        this.left = left;
+        this.right = right;
     }
-
-    private static class Key {
-        String k;
-        public Key(String abc) {
-            this.k = abc;
-        }
-    }*/
+}
